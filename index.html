@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Blackjack</title>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+		rel="stylesheet"
+	/>
+	<link rel="stylesheet" href="styles.css" />
+	<script src="https://unpkg.com/vue@next" defer></script>
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<header>
+		<h1>Blackjack</h1>
+		<h2>Super cool and fun game</h2>
+	</header>
+	<div id="game">
+		<section> <!-- The hand goes in this section -->
+			<ul class="hand" id="dealer">
+				<li v-for="card in dealerHand.cards">
+					<div class="card">
+						<span class="UL">{{ card.val }}</span>
+						<span class="center">{{ card.suit}}</span>
+						<span class="BR">{{ card.val }}</span>
+					</div>
+				</li>
+			</ul>
+			<ul class="hand">
+				<li v-for="card in playerHand.cards">
+					<div class="card">
+						<span class="UL">{{ card.val }}</span>
+						<span class="center">{{ card.suit}}</span>
+						<span class="BR">{{ card.val }}</span>
+					</div>
+				</li>
+			</ul>
+			<span class="playerSum">Player sum: {{ playerValue }}</span>
+			<span class="playerSum">Dealer sum: {{ dealerValue }}</span>
+			<section id="controls" v-if="!winner && played">
+				<button @click="drawCard(playerHand)">Hit</button>
+				<button @click="endRound">Stand</button>
+			</section>
+		</section>
+		<section v-if="winner">
+			<p class="endScreen" v-if="winner === 'player'">You win.</p>
+			<p class="endScreen" v-else-if="winner === 'dealer'">You lose. You should have tried harder.</p>
+			<p class="endScreen" v-else>Tie</p>
+		</section>
+		<button v-if="winner || !played"@click="restart">New game :D</button>
+	</div>
+</body>
+</html>
